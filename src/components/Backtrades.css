@@ -1,0 +1,215 @@
+/* Backtrades.css */
+
+.backtrades {
+    width: 100%;
+    min-height: 10rem; /* Altura mínima similar */
+    max-height: 10rem; /* Altura máxima ajustada */
+    overflow-y: auto; /* Scroll vertical si el contenido excede la altura */
+    background-color: var(--color-background-dark);
+    color: var(--color-texto);
+    font-family: 'Arial', sans-serif;
+    border-top: 2px solid var(--color-borde);
+}
+
+.backtrades-header {
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    padding: 0.3rem 0.5rem;
+    background-color: var(--color-header-dark);
+    color: var(--color-header-text);
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.backtrades-title {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.backtrades-checkbox {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.backtrades-date {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--color-texto);
+}
+
+.backtrades-date-label {
+    margin-right: 0.5rem;
+}
+
+.date-picker-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.backtrades-date-input {
+    width: 7rem;
+    height: 1.6rem;
+    text-align: center;
+    padding: 0.1rem;
+    font-size: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 0.25rem;
+    background-color: var(--color-input-bg);
+    color: var(--color-texto);
+    cursor: pointer;
+}
+
+
+/* Tabla principal */
+.button-right{
+
+    width: 1rem;
+    height: 1rem;
+
+    background-color: var(--color-background-dark);
+    border: none;
+}
+.backtrades-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  
+}
+
+.backtrades-table th,
+.backtrades-table td {
+    border: 1px solid var(--color-borde);
+    text-align: center;
+    padding: 0.2rem;
+}
+
+.backtrades-table th {
+    background-color: var(--color-header-dark);
+    color: var(--color-header-text);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.backtrades-table td {
+    background-color: var(--color-row-bg);
+}
+
+/* Filas dinámicas */
+.row-buy {
+
+  
+    background-color: rgba(0, 255, 0, 0.514);
+    color: var(--color-texto);
+}
+
+.row-sell {
+    background-color: rgba(202, 11, 11, 0.649); /* Rojo más cercano al diseño original */
+    color: var(--color-texto);
+}
+
+/* Hover más intenso para filas BUY */
+.backtrades-table tr.row-buy:hover {
+    
+   
+    background-color: rgba(0, 255, 0, 1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover más intenso para filas SELL */
+.backtrades-table tr.row-sell:hover {
+
+   
+    background-color: rgba(255, 0, 0, 1);
+    color: #ffffff; /* Contraste alto */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botones */
+.action-btn,
+.remove-row-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--color-icon);
+}
+
+.action-btn:hover,
+.remove-row-btn:hover {
+    color: var(--color-icon-hover);
+}
+
+/* Selectores */
+.select-backtrades {
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 0.25rem;
+    background-color: rgba(50, 50, 50, 0.7); /* Más intenso que el fondo */
+    color: var(--color-texto);
+    appearance: none;
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.select-backtrades:hover {
+    background-color: rgba(50, 50, 50, 0.85); /* Fondo más oscuro al pasar el mouse */
+    color: #ffffff; /* Texto más claro */
+}
+
+/* Cantidad (Qty) */
+.qty-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.qty-input button {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    text-align: center;
+    background-color: var(--color-row-bg);
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto);
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+.qty-input button:hover {
+    background-color: var(--color-hover-bg);
+}
+
+.qty-input input {
+    width: 3rem;
+    text-align: center;
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-input-bg);
+    color: var(--color-texto);
+    height: 1.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Íconos */
+.fa-edit,
+.fa-times {
+    cursor: pointer;
+    color: var(--color-icon);
+}
+
+.fa-times:hover {
+    color: var(--color-hover-negativo);
+}
+
+/* Ajustes adicionales */
+.compact-padding {
+    padding: 0.15rem;
+}

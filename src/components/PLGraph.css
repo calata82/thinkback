@@ -1,0 +1,41 @@
+/* PLGraph.css */
+.pl-graph {
+    width: 100%;
+    height: auto;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    border-top: 2px solid var(--color-borde);
+    flex-grow: 1;
+   
+}
+
+.pl-graph-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.pl-graph-header-title {
+    font-size: var(--fuente-tamaño-pequeño);
+    color: var(--color-texto);
+    display: flex;
+    align-items: center;
+    
+}
+
+.pl-graph-content {
+  
+    border-top: var(--borde-ancho-medio) solid var(--color-borde);
+   
+}
+
+.pl-graph-content-container {
+    width: 100%;
+    height: 100%;
+
+}
+
+.pl-graph-placeholder {
+    color: var(--color-placeholder);
+    text-align: center;
+}

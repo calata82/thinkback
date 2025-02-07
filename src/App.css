@@ -1,0 +1,193 @@
+:root {
+  /* Colores principales */
+  --color-primario: #ff9800;
+  --color-secundario: #1e1e1e;
+  --color-terciario: #1c1c1e;
+  --color-texto: #ffffff;
+  --color-titulo: #ffffff;
+
+  /* Colores de interactividad y estado */
+  --color-borde: #444444;
+  --color-hover: #3a3a3c;
+  --color-sombreado: #2a2a2a;
+  --color-positivo: #4caf50;
+  --color-negativo: #e53935;
+  --color-neutral: #9e9e9e;
+  --color-icono: #b0bec5;
+  --color-boton-hover: #616161;
+
+  /* Nuevos colores específicos para Option Chain */
+  --color-hover-buy: rgba(0, 200, 0, 0.7); /* Hover brillante para filas BUY */
+  --color-hover-sell: rgba(200, 0, 0, 0.4); /* Hover pálido para filas SELL */
+  --color-row-buy: rgba(0, 120, 0, 0.4); /* Base verde para filas BUY */
+  --color-row-sell: rgba(120, 0, 0, 0.4); /* Base rojo para filas SELL */
+  --color-row-hover-intenso: rgba(255, 255, 255, 0.1); /* Hover general */
+  --color-call: rgba(0, 120, 255, 0.1); /* Azul para sección CALLS */
+  --color-put: rgba(255, 0, 0, 0.1); /* Rojo para sección PUTS */
+  --color-hover-call: rgba(0, 120, 255, 0.3); /* Hover más brillante en CALLS */
+  --color-hover-put: rgba(255, 0, 0, 0.3); /* Hover más brillante en PUTS */
+
+  /* Colores adicionales */
+  --color-fila-ganancia: rgba(0, 255, 0, 0.2); /* Ganancia */
+  --color-fila-perdida: rgba(255, 0, 0, 0.2); /* Pérdida */
+
+  /* Fuentes */
+  --fuente-principal: 'Arial', sans-serif;
+  --fuente-secundaria: 'Verdana', sans-serif;
+
+  /* Tamaños de fuente */
+  --fuente-tamaño-pequeño: 0.85rem; /* Mejor legibilidad */
+  --fuente-tamaño-mediano: 1.1rem; /* Ajuste base */
+  --fuente-tamaño-grande: 1.4rem; /* Títulos destacados */
+
+  /* Espaciados */
+  --padding-pequeño: 0.625rem;
+  --padding-mediano: 1.2rem;
+  --padding-grande: 1.5rem;
+
+  --margen-pequeño: 0.5rem;
+  --margen-mediano: 1rem;
+  --margen-grande: 1.5rem;
+
+  /* Bordes */
+  --borde-ancho-delgado: 0.0625rem;
+  --borde-ancho-medio: 0.1rem;
+  --borde-ancho-grueso: 0.25rem;
+  --radio-borde: 0.3125rem;
+
+  /* Transiciones y sombras */
+  --transicion: all 0.3s ease;
+  --sombra-componente: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+}
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  max-height: 100vh;
+  font-family: var(--fuente-principal);
+  background-color: var(--color-secundario);
+  color: var(--color-texto);
+  line-height: 1.6;
+  border: 3px solid var(--color-primario);
+  overflow: hidden; /* Evitar desbordes */
+}
+
+
+
+
+/* Barra de Navegación Superior */
+.barra-navegacion {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: black;
+  border-bottom: var(--borde-ancho-medio) solid var(--color-borde);
+}
+
+.lista-navegacion {
+  list-style: none;
+  display: flex;
+  
+}
+
+.enlace-navegacion {
+  background: transparent;
+  border: var(--borde-ancho-delgado) solid var(--color-borde);
+  cursor: pointer;
+  color: var(--color-texto);
+  font-size: var(--fuente-tamaño-pequeño);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radio-borde);
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.enlace-navegacion:hover {
+  background-color: var(--color-hover);
+}
+
+/* Barra de Selección de Ticker */
+.barra-ticker {
+  background-color: var(--color-terciario);
+  padding: var(--padding-pequeño) var(--padding-mediano);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: var(--borde-ancho-medio) solid var(--color-borde);
+}
+
+/* Sección Principal */
+.contenedor-principal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: var(--margen-pequeño);
+}
+
+/* Tabla de Opciones */
+.tabla-opciones {
+  width: 100%;
+  border-collapse: collapse;
+ 
+}
+
+.tabla-opciones th,
+.tabla-opciones td {
+  text-align: right;
+  border-bottom: var(--borde-ancho-delgado) solid var(--color-borde);
+  color: var(--color-texto);
+  font-size: var(--fuente-tamaño-pequeño);
+}
+
+.tabla-opciones th {
+  background-color: var(--color-terciario);
+  font-weight: bold;
+}
+
+.tabla-opciones th:last-child,
+.tabla-opciones td:last-child {
+  border-right: none;
+}
+
+/* Filtros */
+.filtros {
+  display: flex;
+  gap: var(--margen-mediano);
+  padding: var(--padding-pequeño) 0;
+  justify-content: flex-start;
+}
+
+.filtro-item {
+  font-size: var(--fuente-tamaño-pequeño);
+  color: var(--color-texto);
+  display: flex;
+  align-items: center;
+  gap: var(--padding-pequeño);
+}
+
+select {
+  background-color: var(--color-borde);
+  color: var(--color-texto);
+  border: var(--borde-ancho-delgado) solid var(--color-borde);
+  padding: var(--padding-pequeño);
+  border-radius: var(--radio-borde);
+  font-size: var(--fuente-tamaño-pequeño);
+}
+
+/* Gráfico */
+.pl-graph {
+  width: 100%;
+  border-top: var(--borde-ancho-medio) solid var(--color-borde);
+  padding-top: var(--padding-mediano);
+  background-color: var(--color-secundario);
+}
+
+

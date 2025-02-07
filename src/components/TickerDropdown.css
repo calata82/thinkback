@@ -1,0 +1,167 @@
+/* TickerDropdown.css */
+
+.ticker-dropdown {
+  width: 35%; /* Ajuste para mejorar la visibilidad del menú desplegable */
+  left: 0;
+  top: 0;
+  background-color: var(--color-secondary-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.ticker-dropdown-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: var(--color-texto);
+  padding: 0.5rem 0.5rem;
+  font-size: var(--font-size-medium);
+}
+
+.ticker-dropdown-menu {
+  width: 165%;
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  background-color: black;
+  border: 0.0625rem solid var(--color-borde);
+  border-radius: var(--border-radius);
+  margin-top: 0.5rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.ticker-dropdown-categories {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--color-tertiary);
+  border-bottom: 0.0625rem solid var(--color-borde);
+  gap: 0.1rem;
+}
+
+.ticker-dropdown-categories button {
+  background: transparent;
+  border: 0.0625rem solid var(--color-borde);
+  cursor: pointer;
+  color: var(--color-texto);
+  font-size: var(--font-size-small);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.ticker-dropdown-categories button:hover {
+  background-color: var(--color-neutral);
+}
+
+.ticker-dropdown.activo {
+  background-color: #444444;
+  color: var(--color-texto);
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.6);
+}
+
+.ticker-dropdown-list {
+  max-height: 25vh;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  background-color: var(--color-secondary-bg);
+}
+
+.ticker-dropdown-list li {
+  width: 99%;
+  display: flex;
+  justify-content: space-between;
+  transition: background-color 0.3s;
+  border-bottom: 0.0625rem solid var(--color-borde);
+  background-color: var(--color-boton-hover);
+}
+
+.ticker-dropdown-list li span {
+  display: inline-block;
+  width: 50%; /* Ajusta el ancho según sea necesario */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.ticker-dropdown-list li:nth-child(even) {
+  background-color: var(--color-secondary-bg);
+}
+
+.ticker-dropdown-list li:hover {
+  background-color: var(--color-neutral);
+}
+
+.ticker-dropdown-symbol {
+  font-weight: bold;
+  color: var(--color-texto);
+}
+
+.ticker-dropdown-description {
+  color: var(--color-secondary-text);
+  font-size: var(--font-size-small);
+}
+
+.profit-row {
+  background-color: rgba(0, 0, 0, 0.485);
+  color: white;
+}
+
+.profit-row td, tr:hover {
+  background-color: rgba(0, 0, 0, 0.748);
+}
+
+.loss-row {
+  background-color: rgba(128, 0, 128, 0.575);
+  color: white;
+}
+
+.loss-row td:hover {
+  background-color: purple;
+}
+
+/* TickerDropdown.css */
+
+/* Encabezado fijo */
+.ticker-dropdown-fixed {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-secondary-bg);
+  z-index: 10;
+  justify-content: space-evenly;
+  border-bottom: 0.0625rem solid var(--color-borde);
+}
+
+/* Otros estilos para el menú desplegable */
+.ticker-dropdown-symbol-header,
+.ticker-dropdown-description-header {
+  font-weight: bold;
+  color: var(--color-texto);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+
+.ticker-dropdown-list li {
+  display: flex;
+  transition: background-color 0.3s;
+  border-bottom: 0.0625rem solid var(--color-borde);
+}
+
+.ticker-dropdown-list li:nth-child(even) {
+  background-color: var(--color-secondary-bg);
+}
+
+.ticker-dropdown-list li:hover {
+  background-color: var(--color-neutral);
+}
+
