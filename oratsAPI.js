@@ -1,45 +1,26 @@
 // oratsAPI.js
-import React, { useEffect, useState } from 'react';
-import { fetchStrikes, fetchExpirationDates } from '../oratsAPI';
+import axios from 'axios';
+import { API_TOKEN } from './config';
 
+const BASE_URL = 'https://api.orats.io/datav2';
 
-const StrikesTable = ({ ticker }) => {
-  const [strikes, setStrikes] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const getStrikes = async () => {
-      try {
-        const data = await fetchStrikes(ticker);
-        setStrikes(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    getStrikes();
-  }, [ticker]);
-
-  if (error) {
-    return <div>Error: {error}</div>;
+// Fetch strikes for a specific ticker
+export const fetchStrikes = async (ticker) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/live/strikes`, {
+      params: { token: API_TOKEN, ticker },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener strikes:', error);
+    throw error;
   }
-
-  return (
-    <div>
-      <h2>Strikes for {ticker}</h2>
-      <ul>
-        {strikes.map((strike, index) => (
-          <li key={index}>{strike}</li>
-        ))}
-      </ul>
-    </div>
-  );
 };
 
-
+// Fetch expiration dates for options of a specific ticker
 export const fetchExpirationDates = async (ticker) => {
   try {
-    const response = await axios.get(`${BASE_URL}/expiration-dates`, {
+    const response = await axios.get(`${BASE_URL}/options/expirations`, {
       params: { token: API_TOKEN, ticker },
     });
     return response.data;
@@ -49,5 +30,15 @@ export const fetchExpirationDates = async (ticker) => {
   }
 };
 
-
-export default StrikesTable;
+// Fetch tickers from API
+export const fetchTickers = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tickers`, {
+      params: { token: API_TOKEN },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error('Error al obtener los tickers:', error);
+    return [];
+  }
+};

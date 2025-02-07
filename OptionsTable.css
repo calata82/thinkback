@@ -1,0 +1,324 @@
+/* Sección principal */
+.tabla-opciones {
+    width: 100%;
+    padding: 0;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-borde);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Encabezado "Underlying" */
+.underlying-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--fuente-tamaño-mediano);
+    cursor: pointer;
+    padding: 0.3rem;
+    background-color: var(--color-terciario);
+    border: 1px solid var(--color-borde);
+    transition: background-color 0.2s ease;
+}
+
+.underlying-toggle:hover {
+    background-color: var(--color-hover);
+}
+
+.underlying-toggle .fa-chevron-right {
+    transition: transform 0.2s ease;
+}
+
+.underlying-toggle .fa-chevron-right.expanded {
+    transform: rotate(90deg);
+}
+
+/* Tabla "Underlying" */
+.opciones-underlying {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-terciario);
+   
+}
+
+.underlying-header {
+    font-size: var(--fuente-tamaño-pequeño);
+    font-weight: bold;
+    color: var(--color-texto);
+   
+}
+
+.underlying-table {
+    width: 85%;
+    border-collapse: collapse;
+    background-color: var(--color-background);
+    color: var(--color-texto);
+ 
+    margin-left: auto;
+}
+
+.underlying-table th,
+.underlying-table td {
+    text-align: center;
+    padding: 0.2rem;
+    font-size: var(--fuente-tamaño-pequeño);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.underlying-table th {
+    font-weight: bold;
+    background-color: var(--color-terciario);
+    text-transform: uppercase;
+    padding: 0.3rem;
+}
+
+.underlying-table td {
+    background-color: var(--color-background);
+}
+
+/* Hover en filas */
+.underlying-table tr:hover,
+.tabla-datos tr:hover {
+    background-color: var(--color-row-hover-intenso);
+}
+
+/* Positivos y negativos */
+.net-change.positive {
+    color: var(--color-positivo);
+}
+
+.net-change.negative {
+    color: var(--color-negativo);
+}
+
+/* Encabezado de Filtros */
+.opciones-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0.3rem;
+    background-color: var(--color-terciario);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+   
+}
+
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 1rem;
+}
+
+.filtro-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filtro-item label {
+    font-size: var(--fuente-tamaño-pequeño);
+    color: var(--color-texto);
+}
+
+.filtro-item select {
+    background-color: var(--color-input-bg);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+    padding: 0.2rem;
+    font-size: var(--fuente-tamaño-pequeño);
+    border-radius: var(--radio-borde);
+    height: 1.6rem;
+    min-width: 5.5rem;
+}
+
+.filtro-item select:hover {
+    background-color: var(--color-hover);
+}
+
+/* Tabla principal de datos */
+.tabla-datos {
+    width: 100%;
+    border-collapse: collapse;
+  
+}
+
+.tabla-datos th,
+.tabla-datos td {
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-texto);
+    font-size: var(--fuente-tamaño-pequeño);
+    padding: 0.2rem;
+}
+
+.tabla-datos th {
+    background-color: var(--color-terciario);
+    font-weight: bold;
+}
+
+.tabla-datos th:first-child {
+    text-align: left;
+}
+
+.tabla-datos td:first-child {
+    text-align: left;
+}
+
+/* Detalles de CALLS y PUTS */
+.option-chain-table {
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+
+    background-color: var(--color-background);
+}
+
+.option-chain-table th,
+.option-chain-table td {
+    text-align: center;
+    font-size: var(--fuente-tamaño-pequeño);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.option-chain-table th {
+    font-weight: bold;
+    background-color: var(--color-terciario);
+    color: var(--color-texto);
+}
+
+.option-chain-table td {
+    color: var(--color-texto);
+}
+
+/* Estilos CALLS y PUTS */
+.calls-col {
+    background-color: rgba(0, 0, 200, 0.2);
+    color: var(--color-texto);
+}
+
+.puts-col {
+    background-color: rgba(200, 0, 0, 0.2);
+    color: var(--color-texto);
+}
+
+/* Hover dinámico */
+.calls-col:hover,
+.puts-col:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-titulo);
+}
+
+/* Resaltar filas de ganancias/pérdidas */
+.row-gain {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.row-loss {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+/* Tooltip */
+.hover-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: var(--color-texto);
+    padding: 0.5rem;
+    font-size: var(--fuente-tamaño-pequeño);
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 10;
+    transform: translate(-50%, -150%);
+}
+
+/* Flechas */
+.fas.fa-chevron-right,
+.fas.fa-chevron-down {
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--color-texto);
+}
+
+.expanded {
+    transform: rotate(90deg);
+}
+
+/* Selector de Strikes */
+.strike-selector {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.strike-selector label {
+    font-size: var(--fuente-tamaño-pequeño);
+    color: var(--color-texto);
+    font-weight: bold;
+}
+
+.strike-selector select {
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-borde);
+    font-size: var(--fuente-tamaño-pequeño);
+    border-radius: var(--radio-borde);
+}
+
+.strike-selector select:hover {
+    background-color: var(--color-hover);
+}
+
+/* Weekly label */
+.weekly-label {
+    font-size: var(--fuente-tamaño-pequeño);
+    color: var(--color-primario);
+    margin-left: 0.3rem;
+    font-weight: bold;
+}
+
+
+/* Resaltar filas */
+.row-gain {
+    background-color: rgba(100, 100, 255, 0.2); /* Ganancias */
+}
+
+.row-loss {
+    background-color: rgba(255, 100, 100, 0.2); /* Pérdidas */
+}
+/* Estilo para las flechas (aplicado a todas) */
+.fas.fa-chevron-right, .fas.fa-chevron-down {
+    transition: transform 0.2s ease; /* Animación */
+    cursor: pointer; /* Hacer clic */
+    font-size: 0.8rem; /* Tamaño uniforme */
+    color: var(--color-texto); /* Color uniforme */
+
+}
+
+/* Flecha rotada al estar expandida */
+.expanded {
+    transform: rotate(90deg); /* Rotación */
+}
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--color-texto);
+    gap: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .dropdown-toggle .fa-chevron-right {
+    transition: transform 0.3s ease;
+  }
+  
+  .dropdown-toggle .fa-chevron-right.expanded {
+    transform: rotate(90deg);
+  }
+  
+  .contenido-option-chain {
+    padding: 1rem;
+    background-color: var(--color-background);
+    border-top: 1px solid var(--color-borde);
+  }
+  

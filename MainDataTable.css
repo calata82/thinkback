@@ -1,0 +1,278 @@
+.main-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-background);
+    font-family: Arial, sans-serif;
+}
+
+.main-data-table-wrapper {
+    position: relative; /* Asegura que el menú se posicione respecto a este contenedor */
+    min-height: 18rem;
+    max-height: 18rem;
+    overflow-y: auto;
+    border: 1px solid var(--color-borde);
+}
+
+/* Fila de vencimiento */
+.expiration-row {
+    background-color: var(--color-hover);
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--color-texto);
+}
+
+.expiration-row .left-align {
+    text-align: left;
+    padding-left: 0.2rem;
+}
+
+.expiration-row:hover {
+    background-color: var(--color-hover-intenso);
+}
+
+/* Icono de desplegable */
+.expiration-row i {
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.expiration-row i.fa-chevron-down {
+    transform: rotate(90deg);
+}
+
+/* Indicador Weekly */
+.weekly-indicator {
+    color: var(--color-naranja);
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+/* Contratos y métricas */
+.contract-count {
+    margin-left: 0.5rem;
+}
+
+.right-align {
+    text-align: right;
+    padding-right: 0.3rem;
+}
+
+/* Hover para las filas */
+.main-data-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tabla expandida */
+.option-chain-tables {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: var(--color-secundario);
+}
+
+.calls-table,
+.puts-table {
+    width: 40%;
+    margin-top: 1rem;
+}
+
+.strikes-column {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Selector de strikes */
+.strike-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.6rem;
+    padding: 0;
+}
+
+.strike-selector label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.strike-selector select {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background-color: var(--color-input-bg);
+    color: var(--color-texto);
+    font-size: 1rem;
+    height: 1.5rem;
+}
+
+/* Tabla de strikes */
+.strikes-column table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-secundario);
+}
+
+.strikes-column th {
+    margin-bottom: .1875rem;
+    text-align: center;
+    vertical-align: middle;
+    color: var(--color-texto);
+}
+
+.strikes-column td {
+    text-align: center;
+    height: 1.3rem;
+    background-color: var(--color-background);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tabla de llamadas y opciones */
+.calls-table th,
+.puts-table th {
+    background-color: var(--color-hover);
+    padding: 0.5rem;
+    color: var(--color-texto);
+}
+
+.calls-table td,
+.puts-table td {
+    height: 1.3rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Alternar color en filas internas */
+.calls-table tbody tr:nth-child(even),
+.puts-table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Colores para las celdas de Bid y Ask */
+.calls-table .hoverable,
+.puts-table .hoverable {
+    cursor: pointer;
+    background-color: var(--color-hover);
+    color: var(--color-texto);
+    transition: background-color 0.3s ease;
+}
+
+.calls-table .hoverable:hover,
+.puts-table .hoverable:hover {
+    background-color: var(--color-hover-intenso);
+    color: white;
+}
+
+/* Tooltip para Buy y Sell */
+.hoverable[title="Buy"]::after {
+    content: "Buy";
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+}
+
+.hoverable[title="Buy"]:hover::after {
+    opacity: 1;
+    transform: translateY(-20px);
+}
+
+.hoverable[title="Sell"]::after {
+    content: "Sell";
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+}
+
+.hoverable[title="Sell"]:hover::after {
+    opacity: 1;
+    transform: translateY(-20px);
+}
+
+/* Estilo general */
+.option-chain-tables table tbody td {
+    background-color: var(--color-secondary);
+    color: var(--color-texto);
+}
+
+/* Estilo para el contenedor del desplegable de Calls */
+.dropdown-calls {
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    background-color:rgb(202, 117, 19);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 0;
+    width: 12rem;
+    max-height: 12rem;
+    overflow-y: auto;
+    top: 4.8rem; /* Justo debajo del encabezado */
+    left: 0;
+}
+
+/* Estilo para el contenedor del desplegable de Puts */
+.dropdown-puts {
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    background-color:rgb(202, 117, 19);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 0;
+    width: 12rem;
+    max-height: 12rem;
+    overflow-y: auto;
+    top: 4.8rem; /* Justo debajo del encabezado */
+    right: 0;
+    text-align: right;
+
+}
+
+/* Elementos comunes de los menús */
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: var(--color-texto);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--color-hover);
+    color: var(--color-hover-texto);
+}
+
+/* Ocultar menú si no está activo */
+.dropdown-calls.hidden,
+.dropdown-puts.hidden {
+    display: none;
+}
+.metric-header{
+    width: 40%;
+    cursor: pointer;
+
+}
+.metric-header::after {
+    content: " ▼"; /* Símbolo de flecha hacia abajo */
+    font-size: 0.8rem; /* Tamaño ajustado */
+    color: var(--color-texto); /* Usa el color de texto definido */
+    margin-left: 0.3rem; /* Espaciado entre el texto y la flecha */
+}
