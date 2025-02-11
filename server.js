@@ -161,6 +161,11 @@ app.get('/api/getExpirations', async (req, res) => {
   }
 });
 
+setInterval(() => {
+  console.log("Servidor activo en Railway...");
+}, 60000); // Muestra un mensaje cada 60 segundos para evitar que Railway lo detenga
+
+
 // Iniciar servidor
 app.listen(port, () => {
   console.log(`Backend corriendo en http://localhost:${port}`);
