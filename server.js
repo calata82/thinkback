@@ -13,14 +13,14 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = process.env.API_BASE_URL || "https://thinkback-backend-production.up.railway.app";
 
 app.use(cors({ origin: "*" })); 
 app.use(express.json());
 
 // Variables de configuración
 const token = process.env.API_TOKEN;
-console.log("🔹 API Token cargado:", token); 
+console.log("🔹 API Token cargado:", token ? "Cargado correctamente" : "NO CARGADO");
 
 const BASE_URL = 'https://api.orats.io/datav2';
 const OPTIONS_URL = `${BASE_URL}/strikes`;
@@ -168,5 +168,6 @@ setInterval(() => {
 
 // Iniciar servidor
 app.listen(port, () => {
-  console.log(`Backend corriendo en http://localhost:${port}`);
+  console.log(`Backend corriendo en el puerto ${port}`);
 });
+
