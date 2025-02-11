@@ -69,25 +69,25 @@
     background-color: var(--color-terciario);
     text-transform: uppercase;
     padding: 0.3rem;
+    background-color: black;
 }
 
 .underlying-table td {
-    background-color: var(--color-background);
+    background-color: black;
+    font-weight: bold;
 }
 
-/* Hover en filas */
-.underlying-table tr:hover,
-.tabla-datos tr:hover {
-    background-color: var(--color-row-hover-intenso);
-}
 
 /* Positivos y negativos */
 .net-change.positive {
-    color: var(--color-positivo);
+    color: #00ff00;
+    font-weight: bold;
 }
 
 .net-change.negative {
-    color: var(--color-negativo);
+  color: #ff0000; /* Rojo para cambios negativos */
+  font-weight: bold;
+  
 }
 
 /* Encabezado de Filtros */
@@ -190,32 +190,7 @@
     color: var(--color-texto);
 }
 
-/* Estilos CALLS y PUTS */
-.calls-col {
-    background-color: rgba(0, 0, 200, 0.2);
-    color: var(--color-texto);
-}
 
-.puts-col {
-    background-color: rgba(200, 0, 0, 0.2);
-    color: var(--color-texto);
-}
-
-/* Hover dinámico */
-.calls-col:hover,
-.puts-col:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--color-titulo);
-}
-
-/* Resaltar filas de ganancias/pérdidas */
-.row-gain {
-    background-color: rgba(0, 255, 0, 0.2);
-}
-
-.row-loss {
-    background-color: rgba(255, 0, 0, 0.2);
-}
 
 /* Tooltip */
 .hover-tooltip {

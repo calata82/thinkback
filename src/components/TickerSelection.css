@@ -18,6 +18,7 @@
   justify-content: center;
   align-items: center;
   border-bottom: 0.0625rem solid var(--color-borde);
+  font-weight: bold;
 }
 
 .selection-bottom {
@@ -26,23 +27,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: black;
 
- 
-
- 
 }
 
 .selection-input-container {
+  width: 26.3rem;
   display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
   align-items: center;
   position: relative;
 }
 
 .selection-label {
+  width: 8rem;
+  display: flex;
+  flex-flow: row nowrap;
   font-size: var(--font-size-medium);
   color: var(--color-texto);
   margin-right: 0.5rem;
   margin-left: 0.5rem;
+  font-weight: bold;
 }
 
 .selection-input {
@@ -56,45 +62,50 @@
 }
 
 .selection-value {
-  width: 10rem;
-  margin-left: 1rem;
+  width: 4rem;
   font-size: var(--font-size-medium);
   color: var(--color-texto);
+  font-weight: bold;
 }
 
 .selection-date {
+  width: 18rem;
+  position: relative;
   display: flex;
   align-items: center;
-
-  margin-right: 4.5rem;
 
   cursor: pointer;
 }
 
 .selection-date-label {
+  width: 10rem;
   font-size: var(--font-size-medium);
   color: var(--color-texto);
   margin-right: 0.5rem;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .selection-date-input {
     width: 7rem;
     padding: 0.5rem;
-    margin-right: rem;
+    margin-right: 1rem;
     background-color: var(--color-input-bg);
-    border: 1px solid var(--color-borde);
     color: var(--color-texto);
     border-radius: var(--border-radius);
-
+    border: none;
     text-align: left;
     cursor: pointer;
+    font-weight: bold;
 
    
 }
 .date-picker-container {
+  right: 4rem;
   position: relative;
   display: inline-block;
+  z-index: 15000;
+
 }
 
 .calendar-icon {
@@ -104,4 +115,52 @@
   transform: translateY(-50%);
   color: var(--color-texto); 
   pointer-events: none;
+}
+.symbol-description-box {
+  width: auto;
+  display: flex;
+  flex-direction: row ;
+  justify-content: center;
+  align-items: center; /* Para que el símbolo y la descripción estén en líneas separadas */
+  background-color: transparent;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
+  border: none;
+  gap: 1rem;
+  position: absolute;
+  left: 26rem;
+}
+
+.symbol {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.description {
+    font-weight: bold;
+
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario); /* Color más tenue para diferenciarlo */
+}
+.selection-value {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.selection-change {
+  max-height: 2.2rem;
+  font-weight: bold;
+  font-size: .7rem;
+  margin-left: .4rem;
+}
+
+.selection-change.positive {
+  color: #00ff00; /* Verde para cambios positivos */
+}
+
+.selection-change.negative {
+  color: #ff0000; /* Rojo para cambios negativos */
+}
+.selection-prev-close{
+  display: none;
 }

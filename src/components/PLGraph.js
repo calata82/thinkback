@@ -1,30 +1,46 @@
 // src/components/PLGraph.js
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, TimeScale } from 'chart.js';
-import 'chartjs-adapter-date-fns';
+import { 
+  Chart as ChartJS, 
+  CategoryScale, 
+  LinearScale, 
+  PointElement, 
+  LineElement, 
+  BarElement, 
+  BarController, // Asegurado que está importado
+  TimeScale, 
+  Title, 
+  Tooltip, 
+  Legend 
+} from 'chart.js';
 
+import 'chartjs-adapter-date-fns';
 import './PLGraph.css';
 
+// 📌 Registrar los componentes de Chart.js
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
   BarElement,
+  BarController, // Ahora está correctamente registrado
+  TimeScale,
   Title,
   Tooltip,
-  Legend,
-  TimeScale
+  Legend
 );
 
 const PLGraph = () => {
   const data = {
-    labels: Array.from({ length: 470 }, (_, i) => new Date(2024, 0, i + 1).toLocaleDateString('en-US')),
+    labels: Array.from({ length: 470 }, (_, i) => 
+      new Date(2024, 0, i + 1).toLocaleDateString('en-US')
+    ),
     datasets: [
       {
         type: 'line',
-        label: 'Valor de la linea',
+        label: 'Valor de la línea',
         data: Array.from({ length: 470 }, () => Math.floor(300 + Math.random() * 700)),
         borderColor: 'rgba(0, 255, 0, 1)',
         backgroundColor: 'rgba(0, 255, 0, 0.2)',
@@ -35,11 +51,10 @@ const PLGraph = () => {
         pointBorderColor: '#fff',
         fill: false,
         order: 3,
-        
       },
       {
         type: 'line',
-        label: 'Linea de referencia',
+        label: 'Línea de referencia',
         data: Array(470).fill(500),
         borderColor: 'rgba(255, 0, 0, 1)',
         borderWidth: 2,
@@ -73,7 +88,6 @@ const PLGraph = () => {
         backgroundColor: 'rgba(0,0,0,0.7)',
         titleColor: '#ffffff',
         bodyColor: '#ffffff',
-        
       },
     },
     scales: {
@@ -94,9 +108,9 @@ const PLGraph = () => {
           maxRotation: 0,
           autoSkip: true,
           maxTicksLimit: 20,
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)',
-          },
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
         },
       },
       y: {
@@ -107,9 +121,9 @@ const PLGraph = () => {
         },
         ticks: {
           color: '#ffffff',
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)',
-          },
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
         },
       },
     },

@@ -75,7 +75,7 @@ body {
   color: var(--color-texto);
   line-height: 1.6;
   border: 3px solid var(--color-primario);
-  overflow: hidden; /* Evitar desbordes */
+  overflow: hidden;
 }
 
 
@@ -94,7 +94,7 @@ body {
 .lista-navegacion {
   list-style: none;
   display: flex;
-  
+font-weight: bolder;  
 }
 
 .enlace-navegacion {
@@ -186,7 +186,6 @@ select {
 .pl-graph {
   width: 100%;
   border-top: var(--borde-ancho-medio) solid var(--color-borde);
-  padding-top: var(--padding-mediano);
   background-color: var(--color-secundario);
 }
 

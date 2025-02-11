@@ -2,9 +2,9 @@
 
 .backtrades {
     width: 100%;
-    min-height: 10rem; /* Altura mínima similar */
-    max-height: 10rem; /* Altura máxima ajustada */
-    overflow-y: auto; /* Scroll vertical si el contenido excede la altura */
+    min-height: 12rem;
+    max-height: 12rem; 
+    overflow-y: auto; 
     background-color: var(--color-background-dark);
     color: var(--color-texto);
     font-family: 'Arial', sans-serif;
@@ -27,6 +27,7 @@
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    margin-right: 1rem;
 }
 
 .backtrades-checkbox {
@@ -35,6 +36,7 @@
 }
 
 .backtrades-date {
+    position: relative;
     display: flex;
     align-items: center;
     font-size: 0.8rem;
@@ -49,31 +51,23 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+
 }
 
 .backtrades-date-input {
-    width: 7rem;
-    height: 1.6rem;
     text-align: center;
-    padding: 0.1rem;
     font-size: 0.75rem;
-    border: 1px solid var(--color-borde);
+    border: none;
     border-radius: 0.25rem;
     background-color: var(--color-input-bg);
     color: var(--color-texto);
     cursor: pointer;
+    margin-left:3rem;
+    font-weight: bold;
 }
 
 
-/* Tabla principal */
-.button-right{
 
-    width: 1rem;
-    height: 1rem;
-
-    background-color: var(--color-background-dark);
-    border: none;
-}
 .backtrades-table {
     width: 100%;
     border-collapse: collapse;
@@ -81,62 +75,56 @@
   
 }
 
-.backtrades-table th,
-.backtrades-table td {
-    border: 1px solid var(--color-borde);
-    text-align: center;
-    padding: 0.2rem;
-}
-
 .backtrades-table th {
-    background-color: var(--color-header-dark);
-    color: var(--color-header-text);
-    font-weight: bold;
-    text-transform: uppercase;
+    border: 1px solid var(--color-borde);
+    text-align: center;  
+}
+.backtrades-table td{
+    border: 2px solid var(--color-borde);
+
 }
 
-.backtrades-table td {
-    background-color: var(--color-row-bg);
-}
 
+.td-input{
+    width: 3rem;
+    
+}
 /* Filas dinámicas */
 .row-buy {
-
-  
     background-color: rgba(0, 255, 0, 0.514);
     color: var(--color-texto);
+    padding: .3rem;
 }
 
 .row-sell {
-    background-color: rgba(202, 11, 11, 0.649); /* Rojo más cercano al diseño original */
+    background-color: rgba(202, 11, 11, 0.649); 
     color: var(--color-texto);
 }
 
 /* Hover más intenso para filas BUY */
 .backtrades-table tr.row-buy:hover {
-    
-   
-    background-color: rgba(0, 255, 0, 1);
+    background-color: rgba(0, 255, 0, 1); 
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Hover más intenso para filas SELL */
 .backtrades-table tr.row-sell:hover {
-
-   
-    background-color: rgba(255, 0, 0, 1);
-    color: #ffffff; /* Contraste alto */
+    background-color: rgba(255, 0, 0, 1); 
+    color: #ffffff; 
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Botones */
 .action-btn,
 .remove-row-btn {
+    width: 2rem;
+    height: 2rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
     font-size: 1rem;
     color: var(--color-icon);
+    margin-right: .5rem;
 }
 
 .action-btn:hover,
@@ -144,59 +132,6 @@
     color: var(--color-icon-hover);
 }
 
-/* Selectores */
-.select-backtrades {
-    width: 100%;
-    text-align: center;
-    font-size: 0.75rem;
-    border: 1px solid var(--color-borde);
-    border-radius: 0.25rem;
-    background-color: rgba(50, 50, 50, 0.7); /* Más intenso que el fondo */
-    color: var(--color-texto);
-    appearance: none;
-    cursor: pointer;
-
-    padding: 0;
-}
-
-.select-backtrades:hover {
-    background-color: rgba(50, 50, 50, 0.85); /* Fondo más oscuro al pasar el mouse */
-    color: #ffffff; /* Texto más claro */
-}
-
-/* Cantidad (Qty) */
-.qty-input {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2rem;
-}
-
-.qty-input button {
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 0.75rem;
-    text-align: center;
-    background-color: var(--color-row-bg);
-    border: 1px solid var(--color-borde);
-    color: var(--color-texto);
-    cursor: pointer;
-    border-radius: 0.25rem;
-}
-
-.qty-input button:hover {
-    background-color: var(--color-hover-bg);
-}
-
-.qty-input input {
-    width: 3rem;
-    text-align: center;
-    border: 1px solid var(--color-borde);
-    background-color: var(--color-input-bg);
-    color: var(--color-texto);
-    height: 1.5rem;
-    border-radius: 0.25rem;
-}
 
 /* Íconos */
 .fa-edit,
@@ -212,4 +147,169 @@
 /* Ajustes adicionales */
 .compact-padding {
     padding: 0.15rem;
+}
+/* Estilo general del desplegable */
+.spread-select {
+    width: 100%;
+    height: auto; 
+    background-color:transparent; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    padding: .3rem;
+}
+
+/* Estilo cuando el desplegable está activo (focus) */
+.spread-select:focus {
+    outline: none; 
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+/* Estilo de las opciones dentro del desplegable */
+.spread-select option {
+    background-color: #444; 
+    color: white; 
+}
+
+/* Cambiar el color al pasar el mouse por las opciones */
+.spread-select option:hover {
+    background-color:red; 
+    color: #fff; 
+}
+
+/* Ajuste para la celda que contiene el desplegable */
+
+.side-select {
+    width: 100%;
+    height: auto;
+    border: none;
+    background-color: transparent;
+    color: var(--color-texto);
+    cursor: pointer;
+    text-align: center;
+    padding: .3rem;
+}
+.side-select option{
+    background-color: #444; 
+    color: white;
+}
+
+
+.side-select:focus {
+    outline: none;
+    border-color: var(--color-highlight);
+}
+
+/* Qty Symbol column */
+.qty-symbol-cell  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+}
+
+.qty-input-container {
+    padding:.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.qty-btn {
+    width: 1rem;
+    color: var(--color-button-text);
+    background-color: var(--color-button);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: .3rem;
+}
+
+.qty-btn:hover {
+    background-color: var(--color-button-hover);
+    color: var(--color-hover-text);
+}
+
+.qty-value {
+    min-width: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+}
+
+/* Ticker dropdown */
+.qty-ticker-dropdown-container {
+    width: 100%;
+    position: relative;
+    text-align: right;
+    border: none;
+}
+
+.qty-ticker-dropdown {
+    width: 100%;
+    height: auto;
+    text-align: right;
+    border: none;
+    background-color: var(--color-input);
+    color: var(--color-text);
+    appearance: none;
+    cursor: pointer;
+    padding: .3rem;
+}
+.qty-ticker-dropdown option{
+    background-color: #444;    
+}
+
+
+/* Remove row button */
+.remove-row-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-remove-icon);
+}
+
+.remove-row-btn:hover {
+    color: var(--color-remove-icon-hover);
+}
+.weekly-tag {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.date-adjust-btn-container{
+    position: absolute;
+    display: flex;
+    flex-flow: column;
+    right: 3rem;
+
+}
+.date-adjust-btn {
+   
+    background-color: #333;
+    color: #fff;
+    border: none;
+    
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.date-adjust-btn:hover {
+    background-color: #555;
+}
+
+.decrement-btn {
+    width: 1rem;
+    margin-left: .2rem;
+    background-color: transparent;
+}
+
+.increment-btn {
+    width: 1rem;
+    margin-left: .2rem;
+    background-color: transparent;
 }

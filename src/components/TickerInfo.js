@@ -12,13 +12,13 @@ const TickerInfo = () => {
     const getTickerPrice = async () => {
       if (selectedTicker && selectedDate) {
         try {
-          const formattedDate = selectedDate.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+          const formattedDate = selectedDate.toISOString().split('T')[0]; 
           const response = await fetch(
             `https://api.orats.io/datav2/hist/dailies?token=your-secret-token&ticker=${selectedTicker}&tradeDate=${formattedDate}`
           );
           const data = await response.json();
           if (data.data && data.data.length > 0) {
-            setTickerPrice(data.data[0].clspx); // Suponiendo que clspx es el precio de cierre
+            setTickerPrice(data.data[0].clspx); 
           } else {
             setTickerPrice('No data available');
           }

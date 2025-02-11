@@ -25,15 +25,18 @@
   .underlying-data {
     width: 100%;
     min-height: 4rem;
-    max-height: 6rem; /* Para asegurar el scroll */
-    overflow-y: auto; /* Scroll si es necesario */
+    max-height: 6rem; 
+    overflow-y: auto; 
     text-align: center;
+    background-color: black;
   }
   
   .underlying-table {
     width: 100%;
     border-collapse: collapse;
+    background-color: black;
   }
+
   
   .underlying-table th,
   .underlying-table td {

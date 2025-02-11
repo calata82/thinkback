@@ -4,15 +4,18 @@ export const TickerContext = createContext();
 
 const TickerProvider = ({ children }) => {
   const [selectedTicker, setSelectedTicker] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Añadido estado para la fecha
+  const [selectedDescription, setSelectedDescription] = useState(null); 
+  const [selectedDate, setSelectedDate] = useState(new Date()); 
 
   return (
     <TickerContext.Provider
       value={{
         selectedTicker,
         setSelectedTicker,
-        selectedDate, // Exponer selectedDate en el contexto
-        setSelectedDate, // Exponer setSelectedDate para poder modificarlo
+        selectedDescription,
+        setSelectedDescription, 
+        selectedDate, 
+        setSelectedDate, 
       }}
     >
       {children}

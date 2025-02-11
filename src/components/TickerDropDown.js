@@ -6,33 +6,32 @@ import './TickerDropdown.css';
 
 const TickerDropdown = ({ tickers = [] }) => {
   console.log('Tickers recibidos en TickerDropdown:', tickers);
-  const { selectedTicker, setSelectedTicker } = useContext(TickerContext); // Acceder al contexto
+  const { selectedTicker, setSelectedTicker, setSelectedDescription } = useContext(TickerContext); // Añadido setSelectedDescription
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const enrichedTickers = tickers.map((ticker) => ({
     ...ticker,
     description: tickerDescriptions.find((item) => item.ticker === ticker.ticker)?.description || 'No description available',
   }));
-  
+
   const filteredTickers = enrichedTickers.filter((ticker) =>
     ticker.ticker.toLowerCase().includes(searchTerm.toLowerCase()) ||
     ticker.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleSelectTicker = (ticker) => {
-    setSelectedTicker(ticker); // Actualizar el contexto
+    setSelectedTicker(ticker.ticker);
+    setSelectedDescription(ticker.description); 
     setIsDropdownOpen(false);
   };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
 
   return (
     <div className="ticker-dropdown">
@@ -61,13 +60,16 @@ const TickerDropdown = ({ tickers = [] }) => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-         <ul className="ticker-dropdown-list">
+          <ul className="ticker-dropdown-list">
             <li className="ticker-dropdown-header ticker-dropdown-fixed">
               <span className="ticker-dropdown-symbol-header">Symbol</span>
               <span className="ticker-dropdown-description-header">Description</span>
             </li>
             {filteredTickers.map((ticker, index) => (
-              <li key={index} onClick={() => handleSelectTicker(ticker.ticker)}>
+              <li
+                key={index}
+                onClick={() => handleSelectTicker(ticker)} 
+              >
                 <span>{ticker.ticker}</span>
                 <span>{ticker.description}</span>
               </li>

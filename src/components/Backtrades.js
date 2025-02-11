@@ -1,61 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaCalendarAlt, FaEdit } from 'react-icons/fa';
 import './Backtrades.css';
 
-const Backtrades = () => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+const Backtrades = ({ backtrades, setBacktrades, getCurrentPrice, optionChainSelection, backtradesDate, setBacktradesDate }) => {
     const [isExpanded, setIsExpanded] = useState(true);
-    const [data, setData] = useState([
-        {
-            spread: "Single",
-            side: "BUY",
-            qtySymbol: 10,
-            exp: "01/13/2023 (Weekly)",
-            strike: "132",
-            type: "CALL",
-            tradeDate: "01/10/2023",
-            price: 1.49,
-            delta: "385.37",
-            theta: "-349.70",
-            plOpen: "$0.00",
-            checked: true,
-        },
-        {
-            spread: "Single",
-            side: "SELL",
-            qtySymbol: -10,
-            exp: "01/13/2023 (Weekly)",
-            strike: "132",
-            type: "CALL",
-            tradeDate: "01/10/2023",
-            price: 1.49,
-            delta: "-385.37",
-            theta: "349.70",
-            plOpen: "$0.00",
-            checked: false,
-        },
-        {
-            spread: "Single",
-            side: "SELL",
-            qtySymbol: -10,
-            exp: "02/17/2023",
-            strike: "135",
-            type: "PUT",
-            tradeDate: "01/10/2023",
-            price: 8.525,
-            delta: "587.22",
-            theta: "67.42",
-            plOpen: "$0.00",
-            checked: false,
-        },
-    ]);
+  
+    const extractPLData = (row) => {
+        console.log("Extracting P/L Data for row:", row); 
+    
+        if (!row) {
+            console.error("Fila de Backtrades no encontrada.");
+            return null;
+        }
+    
+        const { ticker, strike, price, action, type, qtySymbol } = row;
+    
+        if (!ticker || !strike || !price || !action || !type || !qtySymbol) {
+            console.warn("Datos incompletos en la fila:", row);
+            return null;
+        }
+    
+        const spotPrice = getCurrentPrice ? getCurrentPrice(ticker, backtradesDate) : 0;
+        console.log("Spot Price obtenido:", spotPrice);
+    
+        if (spotPrice === undefined || spotPrice === null) {
+            console.warn(`Precio actual no encontrado para el ticker: ${ticker}`);
+            return null;
+        }
+    
+        return { ticker, strike, price, action, type, qtySymbol, spotPrice };
+    };
+    
+    const calculatePLOpen = (row) => {
+        const plData = extractPLData(row);
+        if (!plData) {
+            console.warn("Datos P/L no disponibles.");
+            return "$0.00";
+        }
+    
+        const { strike, price, action, type, qtySymbol, spotPrice } = plData;
+    
+        let plOpen = 0;
+        if (type === "CALL") {
+            plOpen =
+                action === "BUY"
+                    ? (spotPrice - strike - price) * qtySymbol
+                    : (price + strike - spotPrice) * qtySymbol;
+        } else if (type === "PUT") {
+            plOpen =
+                action === "BUY"
+                    ? (strike - spotPrice - price) * qtySymbol
+                    : (price + spotPrice - strike) * qtySymbol;
+        }
+    
+        console.log(`P/L Open calculado (${type} - ${action}):`, plOpen);
+        return `$${plOpen.toFixed(2)}`;
+    };
+    
+   
 
     const handleDateChange = (date, index) => {
-        const updatedData = [...data];
-        updatedData[index].tradeDate = date.toISOString().split("T")[0]; // Actualizar la fecha
-        setData(updatedData);
+        const updatedData = [...backtrades];
+        updatedData[index].tradeDate = date?.toISOString().split("T")[0] || "-";
+        setBacktrades(updatedData);
     };
 
     const toggleExpand = () => {
@@ -63,29 +72,126 @@ const Backtrades = () => {
     };
 
     const toggleRowCheck = (index) => {
-        const updatedData = [...data];
-        updatedData[index].checked = !updatedData[index].checked;
-        setData(updatedData);
-    };
-
-    const updateSide = (index, side) => {
-        const updatedData = [...data];
-        updatedData[index].side = side;
-        setData(updatedData);
+        const updatedData = [...backtrades];
+        updatedData[index].checked = !updatedData[index].checked || false;
+        setBacktrades(updatedData);
     };
 
     const updateQtySymbol = (index, change) => {
-        const updatedData = [...data];
-        updatedData[index].qtySymbol += change;
-        setData(updatedData);
+        setBacktrades((prevBacktrades) =>
+            prevBacktrades.map((row, i) =>
+                i === index
+                    ? {
+                          ...row,
+                          qtySymbol: Math.max((row.qtySymbol || 1) + change, 1), 
+                          plOpen: calculatePLOpen({
+                              ...row,
+                              qtySymbol: Math.max((row.qtySymbol || 1) + change, 1),
+                          }), 
+                      }
+                    : row
+            )
+        );
+    };
+    
+
+    const formatPrice = (price) => {
+        if (typeof price === 'number') {
+            return price.toFixed(3);
+        }
+        return "-";
     };
 
-    const updateStrikeType = (index, type) => {
-        const updatedData = [...data];
-        updatedData[index].type = type;
-        setData(updatedData);
+    const handleSpreadChange = (index, newSpread) => {
+        const updatedData = [...backtrades];
+        updatedData[index].spread = newSpread; 
+        setBacktrades(updatedData);
     };
 
+    const spreadOptions = ["Single", "Vertical", "Calendar", "Diagonal", "Iron Condor", "Custom"]; 
+
+
+    const handleTickerChange = (index, newTicker) => {
+        const updatedData = [...backtrades];
+        updatedData[index].ticker = newTicker;
+        setBacktrades(updatedData);
+    };
+    
+
+    useEffect(() => {
+       
+        setBacktrades((prevBacktrades) =>
+            prevBacktrades.map((row) => ({
+                ...row,
+                plOpen: calculatePLOpen(row), 
+            }))
+        );
+    }, [backtradesDate]); 
+    
+
+
+    const tickerOptions = ["AAPL", "MSFT", "GOOG", "AMZN", "TSLA"];
+
+    
+    const isWeekly = (tradeDate, expirDate) => {
+        if (!tradeDate || !expirDate) return false;
+    
+        const trade = new Date(tradeDate);
+        const expir = new Date(expirDate);
+    
+        const diffDays = (expir - trade) / (1000 * 60 * 60 * 24); 
+        const expirDay = expir.getDay(); 
+    
+        const isMonthly = expirDay === 5 && expir.getDate() > 14 && expir.getDate() <= 21;
+        return expirDay === 5 && diffDays > 0 && !isMonthly;
+    };
+    
+
+
+      // Actualiza los datos cuando se selecciona algo en OptionChain
+      useEffect(() => {
+        if (optionChainSelection) {
+            const { ticker, expirationDate, strike, type, price, action } = optionChainSelection;
+
+            const newEntry = {
+                ticker,
+                expirationDate,
+                strike,
+                type,
+                price,
+                action,
+                qtySymbol: 1,
+                tradeDate: new Date().toISOString().split("T")[0],
+                isWeekly: isWeekly(new Date(), expirationDate),
+            };
+
+            setBacktrades((prevBacktrades) => [...prevBacktrades, newEntry]);
+        }
+    }, [optionChainSelection, setBacktrades]);
+
+
+
+
+    // Incrementa la fecha seleccionada en un día
+    const incrementDate = () => {
+        setBacktradesDate((prevDate) => {
+            const newDate = new Date(prevDate);
+            newDate.setDate(newDate.getDate() + 1);
+            return newDate;
+        });
+    };
+    
+    const decrementDate = () => {
+        setBacktradesDate((prevDate) => {
+            const newDate = new Date(prevDate);
+            newDate.setDate(newDate.getDate() - 1);
+            return newDate;
+        });
+    };
+    
+    
+
+        
     return (
         <section className="backtrades">
             <div className="backtrades-header">
@@ -101,88 +207,165 @@ const Backtrades = () => {
                 <div className="backtrades-date">
                     <label htmlFor="date-input" className="backtrades-date-label">P/L Date:</label>
                     <div className="date-picker-container">
+                        
                         <DatePicker
-                            selected={selectedDate}
-                            onChange={(date) => setSelectedDate(date)}
+                            selected={backtradesDate}
+                            onChange={(date) => setBacktradesDate(date)}
                             dateFormat="MM/dd/yyyy"
                             className="backtrades-date-input"
                             placeholderText="MM/DD/YYYY"
                             id="date-input"
                         />
-                        <FaCalendarAlt className="calendar-icon" />
+                        <FaCalendarAlt className="calendar-icon" /> 
                     </div>
+                    <div className='date-adjust-btn-container'>
+                        <button
+                            className="date-adjust-btn increment-btn"
+                            onClick={incrementDate}
+                            title="Increase Date"
+                        >
+                            +
+                        </button>
+                         <button
+                            className="date-adjust-btn decrement-btn"
+                            onClick={decrementDate}
+                            title="Decrease Date"
+                        >
+                            -
+                        </button>
+                        
+                        </div>
                 </div>
             </div>
             {isExpanded && (
                 <table className="backtrades-table">
                     <thead>
                         <tr>
-                            <th></th> {/* Checkbox */}
+                            <th></th>
                             <th>Spread</th>
                             <th>Side</th>
                             <th>Qty Symbol</th>
                             <th>Exp</th>
-                            <th>Strike Type</th>
+                            <th>Strike</th>
+                            <th>Type</th>
                             <th>Trade Date</th>
                             <th>Price</th>
                             <th>Delta</th>
                             <th>Theta</th>
                             <th>P/L Open</th>
-                            <th></th> {/* Actions */}
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((row, index) => (
-                            <tr key={index} className={row.side === "BUY" ? "row-buy" : "row-sell"}>
+                        {backtrades.map((row, index) => (
+                            <tr
+                                key={index}
+                                className={row.action === "BUY" ? "row-buy" : "row-sell"}
+                            >
                                 <td>
                                     <input
                                         type="checkbox"
-                                        checked={row.checked}
+                                        checked={row.checked || false}
                                         onChange={() => toggleRowCheck(index)}
                                     />
                                 </td>
-                                <td>{row.spread}</td>
                                 <td>
-                                    <select className='select-backtrades'
-                                        value={row.side}
-                                        onChange={(e) => updateSide(index, e.target.value)}
+                                    <select
+                                        value={row.spread || "Single"}
+                                        onChange={(e) => handleSpreadChange(index, e.target.value)}
+                                        className="spread-select"
+                                    >
+                                        {spreadOptions.map((option) => (
+                                            <option key={option} value={option}>
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select
+                                        value={row.action || "BUY"}
+                                        onChange={(e) => {
+                                            const updatedData = [...backtrades];
+                                            updatedData[index].action = e.target.value;
+                                            setBacktrades(updatedData);
+                                        }}
+                                        className="side-select"
                                     >
                                         <option value="BUY">BUY</option>
                                         <option value="SELL">SELL</option>
                                     </select>
                                 </td>
-                                <td>
-                                    <button onClick={() => updateQtySymbol(index, -1)}>-</button>
-                                    {row.qtySymbol}
-                                    <button onClick={() => updateQtySymbol(index, 1)}>+</button>
-                                </td>
-                                <td>{row.exp}</td>
-                                <td>
-                                    <select className='select-backtrades'
-                                        value={row.type}
-                                        onChange={(e) => updateStrikeType(index, e.target.value)}
+                                <td className="qty-symbol-cell">
+                                    <div className="qty-input-container">
+                                    <button
+                                        onClick={() => updateQtySymbol(index, -1)}
+                                        className="qty-btn"
+                                        title="Decrease Quantity"
                                     >
-                                        <option value="CALL">CALL</option>
-                                        <option value="PUT">PUT</option>
-                                    </select>
+                                            -
+                                        </button>
+                                        <span className="qty-value">
+                                            {`${row.qtySymbol >= 0 ? "+" : ""}${row.qtySymbol || 0}`}
+                                        </span>
+                                        <button
+                                            onClick={() => updateQtySymbol(index, 1)}
+                                            className="qty-btn"
+                                            title="Increase Quantity"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                    <div className="qty-ticker-dropdown-container">
+                                        <select
+                                            value={row.ticker || "N/A"}
+                                            onChange={(e) => handleTickerChange(index, e.target.value)}
+                                            className="qty-ticker-dropdown"
+                                        >
+                                            {tickerOptions.map((ticker, idx) => (
+                                                <option key={idx} value={ticker}>
+                                                    {ticker}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </td>
                                 <td>
-                                    <DatePicker
-                                        selected={new Date(row.tradeDate)}
-                                        onChange={(date) => handleDateChange(date, index)}
-                                        dateFormat="MM/dd/yyyy"
-                                    />
-                                    
+                                    {row.expirationDate ? (
+                                        <span>
+                                            {row.isWeekly ? <span className="weekly-tag">(Weeklys)</span> : null}
+                                            {new Date(row.expirationDate).toLocaleDateString('en-US', {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: '2-digit',
+                                            })} 
+                                        </span>
+                                    ) : "-"}
+                                </td>
+                                <td>{row.strike || "-"}</td>
+                                <td>{row.type || "CALL"}</td>
+                                <td>
+                                <DatePicker
+                                    selected={backtradesDate}
+                                    onChange={(date) => setBacktradesDate(date)}
+                                    dateFormat="MM/dd/yyyy"
+                                    className="backtrades-date-input"
+                                    placeholderText="MM/DD/YYYY"
+                                    id="date-input"
+                                />
+
                                 </td>
                                 <td>
-                                    {row.price.toFixed(3)}{" "}
-                                    <FaEdit className="edit-icon" />
+                                    {formatPrice(row.price)} <FaEdit className="edit-icon" />
                                 </td>
-                                <td>{row.delta}</td>
-                                <td>{row.theta}</td>
-                                <td>{row.plOpen}</td>
-                                <td>
-                                    <button className="remove-row-btn" onClick={() => setData(data.filter((_, i) => i !== index))}>
+                                <td>{row.delta || "-"}</td>
+                                <td>{row.theta || "-"}</td>
+                                <td>{calculatePLOpen(row)}</td>
+                                <td className='td-input'>
+                                    <button
+                                        className="remove-row-btn"
+                                        onClick={() => setBacktrades(backtrades.filter((_, i) => i !== index))}
+                                    >
                                         <i className="fas fa-times"></i>
                                     </button>
                                 </td>
@@ -193,6 +376,9 @@ const Backtrades = () => {
             )}
         </section>
     );
+
+
+
 };
 
 export default Backtrades;

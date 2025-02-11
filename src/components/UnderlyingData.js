@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { API_BASE_URL, API_TOKEN } from '../config'; 
 import { TickerContext } from '../context/TickerContext';
 
 const UnderlyingData = ({ isExpanded, toggle }) => {
-  const { selectedTicker, selectedDate } = useContext(TickerContext); // Conectarse al contexto
+  const { selectedTicker, selectedDate } = useContext(TickerContext); 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +14,7 @@ const UnderlyingData = ({ isExpanded, toggle }) => {
         setLoading(true);
         try {
           const response = await fetch(
-            `http://localhost:5000/api/getTickerData?ticker=${selectedTicker}&tradeDate=${selectedDate.toISOString().split('T')[0]}`
+            `${API_BASE_URL}/api/getTickerData?ticker=${selectedTicker}&tradeDate=${selectedDate.toISOString().split('T')[0]}`
           );
           const result = await response.json();
           console.log('Data received from backend:', result);
@@ -41,7 +42,7 @@ const UnderlyingData = ({ isExpanded, toggle }) => {
     };
 
     fetchUnderlyingData();
-  }, [selectedTicker, selectedDate]); // Reaccionar a cambios en el ticker o fecha
+  }, [selectedTicker, selectedDate]); 
 
   return (
     <div className="opciones-underlying">
