@@ -21,6 +21,7 @@ app.use(express.json());
 // Variables de configuración
 const token = process.env.API_TOKEN;
 console.log("🔹 API Token cargado:", token); 
+
 const BASE_URL = 'https://api.orats.io/datav2';
 const OPTIONS_URL = `${BASE_URL}/strikes`;
 const HISTORICAL_OPTION_CHAIN_URL = `${BASE_URL}/hist/strikes`; 
@@ -162,5 +163,5 @@ app.get('/api/getExpirations', async (req, res) => {
 
 // Iniciar servidor
 app.listen(port, () => {
-  console.log(`Backend corriendo en el puerto ${port}`);
+  console.log(`Backend corriendo en http://localhost:${port}`);
 });
