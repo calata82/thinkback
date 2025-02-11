@@ -3,7 +3,7 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 require('dotenv').config();
 
 // Configuración de CORS
@@ -13,54 +13,103 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
-app.use(cors(corsOptions));
-app.use(express.json());
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-// Proxy para frontend
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  next();
-});
+app.use(cors({ origin: "*" })); 
+app.use(express.json());
 
 // Variables de configuración
 const token = process.env.API_TOKEN;
+console.log("🔹 API Token cargado:", token); 
 const BASE_URL = 'https://api.orats.io/datav2';
-const OPTIONS_URL = 'https://api.orats.io/datav2/strikes';
+const OPTIONS_URL = `${BASE_URL}/strikes`;
+const HISTORICAL_OPTION_CHAIN_URL = `${BASE_URL}/hist/strikes`; 
 
-// Endpoint para obtener la cadena de opciones (Option Chain)
-app.get('/api/getOptionChain', async (req, res) => {
+
+// Nuevo endpoint para obtener la cadena de opciones histórica
+app.get('/api/getHistoricalOptionChain', async (req, res) => {
   const { ticker, tradeDate } = req.query;
 
+  // Verificar si los parámetros requeridos están presentes
   if (!ticker || !tradeDate) {
+    console.warn("Parámetros faltantes:", { ticker, tradeDate });
     return res.status(400).json({ error: 'El parámetro ticker y tradeDate son requeridos' });
   }
 
   try {
-    const response = await axios.get(`${OPTIONS_URL}`, {
-      params: { token, ticker }
+    console.log("Solicitud recibida para obtener cadena de opciones histórica:", { ticker, tradeDate });
+
+    // Realizar la solicitud al endpoint de ORATS
+    const response = await axios.get(HISTORICAL_OPTION_CHAIN_URL, {
+      params: { token, ticker, tradeDate }
     });
 
+    // Verificar si la respuesta contiene datos válidos
     if (!response.data || !response.data.data || response.data.data.length === 0) {
-      return res.status(404).json({ error: 'No hay datos disponibles para el ticker proporcionado' });
+      console.warn("No se encontraron datos históricos:", { ticker, tradeDate });
+      return res.status(404).json({ error: 'No hay datos históricos disponibles para el ticker proporcionado' });
     }
 
-    // Transformar datos para enviarlos al frontend
+    console.log("Datos recibidos de ORATS:", response.data.data.slice(0, 5)); // Muestra los primeros 5 registros para verificación
+
+    // Transformar y mapear los datos recibidos
     const transformedData = response.data.data.map((option) => ({
-      expirationDate: option.expirDate,
+      ticker: option.ticker,
+      tradeDate: option.tradeDate,
+      expirDate: option.expirDate,
+      dte: option.dte,
       strike: option.strike,
-      callBid: option.callBidPrice || '-',
-      callAsk: option.callAskPrice || '-',
-      putBid: option.putBidPrice || '-',
-      putAsk: option.putAskPrice || '-',
+      stockPrice: option.stockPrice,
+      callVolume: option.callVolume,
+      callOpenInterest: option.callOpenInterest,
+      callBidSize: option.callBidSize,
+      callAskSize: option.callAskSize,
+      putVolume: option.putVolume,
+      putOpenInterest: option.putOpenInterest,
+      putBidSize: option.putBidSize,
+      putAskSize: option.putAskSize,
+      callBidPrice: option.callBidPrice,
+      callValue: option.callValue,
+      callAskPrice: option.callAskPrice,
+      putBidPrice: option.putBidPrice,
+      putValue: option.putValue,
+      putAskPrice: option.putAskPrice,
+      callBidIv: option.callBidIv,
+      callMidIv: option.callMidIv,
+      callAskIv: option.callAskIv,
+      smvVol: option.smvVol,
+      putBidIv: option.putBidIv,
+      putMidIv: option.putMidIv,
+      putAskIv: option.putAskIv,
+      residualRate: option.residualRate,
+      delta: option.delta,
+      gamma: option.gamma,
+      theta: option.theta,
+      vega: option.vega,
+      rho: option.rho,
+      phi: option.phi,
+      driftlessTheta: option.driftlessTheta,
+      extSmvVol: option.extSmvVol,
+      extCallValue: option.extCallValue,
+      extPutValue: option.extPutValue,
+      spotPrice: option.spotPrice,
+      updatedAt: option.updatedAt,
     }));
 
+    // Enviar los datos transformados al frontend
     res.json({ data: transformedData });
   } catch (error) {
-    console.error('Error al obtener Option Chain:', error.message);
-    res.status(500).json({ error: 'Error al obtener Option Chain', details: error.message });
+    console.error('Error al obtener la cadena de opciones histórica:', error.message);
+    res.status(500).json({
+      error: 'Error al obtener la cadena de opciones histórica',
+      details: error.response?.data || error.message,
+    });
   }
 });
+
+
+
+
 
 // Endpoint para datos históricos de precios
 app.get('/api/getTickerData', async (req, res) => {
@@ -71,7 +120,7 @@ app.get('/api/getTickerData', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(`${BASE_URL}/hist/dailies`, {
+    const response = await axios.get(`${API_BASE_URL}/hist/dailies`, {
       params: { token, ticker, tradeDate }
     });
 
@@ -95,7 +144,7 @@ app.get('/api/getExpirations', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(`${OPTIONS_URL}`, {
+    const response = await axios.get(`${API_BASE_URL}`, {
       params: { token, ticker }
     });
 
@@ -113,5 +162,5 @@ app.get('/api/getExpirations', async (req, res) => {
 
 // Iniciar servidor
 app.listen(port, () => {
-  console.log(`Backend corriendo en http://localhost:${port}`);
+  console.log(`Backend corriendo en el puerto ${port}`);
 });
