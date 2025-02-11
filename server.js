@@ -14,12 +14,13 @@ const corsOptions = {
 };
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://thinkback-backend-production.up.railway.app";
-
+console.log("🔹 API_BASE_URL:", process.env.REACT_APP_API_BASE_URL);
 app.use(cors({ origin: "*" })); 
 app.use(express.json());
 
 // Variables de configuración
 const token = process.env.API_TOKEN;
+console.log("🔹 API_TOKEN:", process.env.REACT_APP_API_TOKEN);
 console.log("🔹 API Token cargado:", token ? "Cargado correctamente" : "NO CARGADO");
 
 const BASE_URL = 'https://api.orats.io/datav2';
